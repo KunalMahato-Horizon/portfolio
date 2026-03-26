@@ -24,10 +24,6 @@ export default function Hero() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // // Parallax effect for image (desktop only)
-  // const imageX = useTransform(smoothX, [0, window.innerWidth], [-20, 20]);
-  // const imageY = useTransform(smoothY, [0, window.innerHeight], [-20, 20]);
-
   useEffect(() => {
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
@@ -48,19 +44,19 @@ export default function Hero() {
     default: { 
       width: 16, 
       height: 16, 
-      backgroundColor: "#ffffff", 
+      backgroundColor: "#3B82F6", 
       mixBlendMode: "difference" 
     },
     image: { 
       width: isMobile ? 16 : 120, 
       height: isMobile ? 16 : 120, 
-      backgroundColor: "#ffffff", 
+      backgroundColor: "#F97316", 
       mixBlendMode: "difference" 
     },
     link: { 
       width: isMobile ? 16 : 50, 
       height: isMobile ? 16 : 50, 
-      backgroundColor: "#ffffff", 
+      backgroundColor: "#3B82F6", 
       mixBlendMode: "difference" 
     }
   };
@@ -82,14 +78,14 @@ export default function Hero() {
             x: "-50%", 
             y: "-50%" 
           }}
-          className="fixed z-[9999] pointer-events-none rounded-full flex items-center justify-center overflow-hidden hidden md:flex backdrop-blur-sm bg-white/10"
+          className="fixed z-[9999] pointer-events-none rounded-full flex items-center justify-center overflow-hidden hidden md:flex backdrop-blur-sm"
         >
           <motion.span 
             animate={{ 
               opacity: hoverState === "image" ? 1 : 0,
               scale: hoverState === "image" ? 1 : 0.5
             }}
-            className="text-black font-bold text-sm tracking-widest uppercase"
+            className="text-black font-bold text-sm tracking-widest uppercase whitespace-nowrap"
           >
             Explore
           </motion.span>
@@ -123,7 +119,9 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-[18vw] md:text-[15vw] lg:text-[11vw] font-black leading-[0.8] tracking-[-0.03em] text-[#1a1a1a] md:text-white md:mix-blend-difference md:pl-[4vw] lg:pl-[5vw]"
           >
-            MAHATO
+            <span className="bg-gradient-to-r from-[#3B82F6] to-[#F97316] bg-clip-text text-transparent md:text-white md:mix-blend-difference">
+              MAHATO
+            </span>
           </motion.h1>
           
           {/* Small descriptor - hidden on mobile */}
@@ -133,7 +131,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="hidden md:flex absolute -bottom-12 left-1 items-center gap-3"
           >
-            <div className="w-12 h-px bg-current opacity-30"></div>
+            <div className="w-12 h-px bg-gradient-to-r from-[#3B82F6] to-[#F97316] opacity-50"></div>
             <span className="text-xs uppercase tracking-[0.3em] font-medium text-current opacity-60">
               Frontend Developer
             </span>
@@ -150,7 +148,7 @@ export default function Hero() {
           className="relative md:absolute z-0 w-full md:w-[45vw] lg:w-[32vw] mx-auto md:mx-0 md:right-[5%] lg:right-[8%] mt-8 md:mt-0 md:top-[12%] lg:top-[10%]"
         >
           {/* Frame */}
-          <div className="relative">
+          <div className="relative group">
             {/* Outer frame lines - hidden on mobile */}
             <div className="absolute -inset-4 border border-white/10 rounded-sm hidden md:block"></div>
             <div className="absolute -inset-2 border border-white/5 rounded-sm hidden md:block"></div>
@@ -167,7 +165,7 @@ export default function Hero() {
               <img 
                 src={heroImage} 
                 alt="Kunal Mahato"
-                className="w-full h-full object-cover grayscale brightness-90 hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700"
               />
               
               {/* Subtle overlay */}
@@ -177,7 +175,7 @@ export default function Hero() {
             {/* Minimal caption - hidden on mobile */}
             <div className="absolute -bottom-8 right-0 items-center gap-3 text-white/40 text-xs hidden md:flex">
               <span>—</span>
-              <span>2024</span>
+              <span className="text-[#3B82F6]">2024</span>
             </div>
           </div>
         </motion.div>
@@ -195,12 +193,15 @@ export default function Hero() {
               <p className="text-sm md:text-base text-[#1a1a1a]/70 leading-relaxed">
                 Building modern, high-performing websites that help businesses grow.
                 <span className="block mt-1 font-medium text-[#1a1a1a]/90">that help brands lead.
-                <div>React • Node.js • Tailwind • MongoDB</div></span>
+                <div><span className="text-[#3B82F6]">React</span> • 
+                <span className="text-[#F97316]"> Node.js</span> • 
+                <span className="text-[#3B82F6]"> Tailwind</span> • 
+                <span className="text-[#F97316]"> MongoDB</span></div></span>
               </p>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto relative z-30">
               <a 
                 href="#contact"
                 onMouseEnter={() => setHoverState("link")}
@@ -208,7 +209,7 @@ export default function Hero() {
                 className="group relative px-6 py-3 bg-[#1a1a1a] text-[#e3e3e3] rounded-full overflow-hidden w-full sm:w-auto text-center cursor-none"
               >
                 <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                <span className="relative z-10 font-medium text-sm mix-blend-difference group-hover:text-black transition-colors duration-500">
+                <span className="relative z-10 font-medium text-sm group-hover:text-black transition-colors duration-500">
                   Start Project
                 </span>
               </a>
@@ -217,9 +218,16 @@ export default function Hero() {
                 href="#work" 
                 onMouseEnter={() => setHoverState("link")}
                 onMouseLeave={() => setHoverState("default")}
-                className="px-6 py-3 border border-[#1a1a1a]/20 text-[#1a1a1a] rounded-full text-sm font-medium hover:border-[#1a1a1a]/40 transition-all duration-300 w-full sm:w-auto text-center cursor-none"
+                className="px-6 py-3 bg-[#1a1a1a] text-[#e3e3e3] rounded-full text-sm font-medium hover:bg-[#2a2a2a] transition-all duration-300 w-full sm:w-auto text-center cursor-none shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group"
               >
                 View Work
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
+                  className="inline-block text-[#3B82F6] group-hover:text-[#F97316] transition-colors"
+                >
+                  →
+                </motion.span>
               </a>
             </div>
           </div>
@@ -230,7 +238,7 @@ export default function Hero() {
           initial={{ height: 0 }}
           animate={{ height: "30%" }}
           transition={{ duration: 1.5, delay: 0.5 }}
-          className="absolute left-[2%] top-[15%] w-px bg-gradient-to-b from-transparent via-white/20 to-transparent hidden md:block"
+          className="absolute left-[2%] top-[15%] w-px bg-gradient-to-b from-transparent via-[#3B82F6]/30 to-transparent hidden md:block"
         />
 
         {/* Scroll indicator - hidden on mobile */}
@@ -243,7 +251,7 @@ export default function Hero() {
           <span className="text-[10px] uppercase tracking-[0.3em] text-[#1a1a1a]/30">
             Scroll
           </span>
-          <div className="w-px h-12 bg-gradient-to-b from-[#1a1a1a]/20 to-transparent"></div>
+          <div className="w-px h-12 bg-gradient-to-b from-[#3B82F6]/30 to-transparent"></div>
         </motion.div>
       </div>
     </section>

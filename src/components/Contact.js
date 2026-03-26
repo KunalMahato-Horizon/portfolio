@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 
 const socialLinks = [
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/kunal-mahato-bb7551384?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", id: "01" },
-  { name: "GitHub", href: "https://github.com/KunalMahato-Horizon", id: "02" },
-  { name: "Instagram", href: "https://www.instagram.com/code_with_horizon?igsh=MTUzYTdxajJtNDJ2Nw==", id: "03" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/kunal-mahato-bb7551384?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", id: "01", color: "#3B82F6" },
+  { name: "GitHub", href: "https://github.com/KunalMahato-Horizon", id: "02", color: "#F97316" },
+  { name: "Instagram", href: "https://www.instagram.com/code_with_horizon?igsh=MTUzYTdxajJtNDJ2Nw==", id: "03", color: "#3B82F6" },
 ];
 
 export default function Contact() {
@@ -27,7 +27,9 @@ export default function Contact() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="text-[16vw] lg:text-[13vw] font-black tracking-tighter uppercase leading-[0.75]"
           >
-            Connect
+            <span className="bg-gradient-to-r from-[#3B82F6] to-[#F97316] bg-clip-text text-transparent">
+              Connect
+            </span>
           </motion.h2>
         </div>
         <div className="overflow-hidden mt-2">
@@ -52,10 +54,11 @@ export default function Contact() {
               ( Inquiry_Portal )
             </span>
             <h3 className="text-4xl lg:text-5xl font-black uppercase tracking-tighter mb-6 leading-none">
-              Have an Idea?
+              Have an <span className="text-[#3B82F6]">Idea</span>?
             </h3>
             <p className="text-gray-500 max-w-sm text-sm lg:text-base leading-relaxed mb-10">
-              I am currently available for selective freelance partnerships and creative collaborations for the 2026 season.
+              I am currently available for selective freelance partnerships and 
+              <span className="text-[#F97316]"> creative collaborations</span> for the 2026 season.
             </p>
           </div>
           
@@ -63,8 +66,11 @@ export default function Contact() {
             href="mailto:Horizonhub666@gmail.com"
             className="relative inline-block text-xl lg:text-2xl font-bold tracking-tight w-fit group"
           >
-            Horizonhub666@gmail.com
-            <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#1a1a1a] origin-left scale-x-100 group-hover:scale-x-50 transition-transform duration-500" />
+            <span className="text-[#3B82F6] group-hover:text-[#3B82F6]/80 transition-colors">
+              Horizonhub666
+            </span>
+            @gmail.com
+            <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-gradient-to-r from-[#3B82F6] to-[#F97316] origin-left scale-x-100 group-hover:scale-x-50 transition-transform duration-500" />
           </a>
         </div>
 
@@ -81,11 +87,21 @@ export default function Contact() {
                   href={link.href}
                   whileHover={{ x: 15 }}
                   className="flex items-center justify-between py-4 border-b border-[#1a1a1a]/5 last:border-0 group cursor-none"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <span className="text-2xl lg:text-3xl font-black uppercase tracking-tighter">
+                  <span className={`text-2xl lg:text-3xl font-black uppercase tracking-tighter transition-colors ${
+                    link.name === "LinkedIn" ? "group-hover:text-[#3B82F6]" :
+                    link.name === "GitHub" ? "group-hover:text-[#F97316]" :
+                    "group-hover:text-[#3B82F6]"
+                  }`}>
                     {link.name}
                   </span>
-                  <span className="text-xs font-mono opacity-20 group-hover:opacity-100 transition-opacity">
+                  <span className={`text-xs font-mono opacity-20 group-hover:opacity-100 transition-opacity ${
+                    link.name === "LinkedIn" ? "group-hover:text-[#3B82F6]" :
+                    link.name === "GitHub" ? "group-hover:text-[#F97316]" :
+                    "group-hover:text-[#3B82F6]"
+                  }`}>
                     LINK_{link.id} ↗
                   </span>
                 </motion.a>
@@ -96,11 +112,15 @@ export default function Contact() {
           {/* FINAL METADATA */}
           <div className="mt-16 pt-8 border-t border-[#1a1a1a]/5 flex justify-between items-end">
              <div className="flex flex-col gap-1">
-                <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest">© 2026 Helios Portfolio</span>
-                <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest italic">Designed for Motion</span>
+                <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest">
+                  © 2026 <span className="text-[#3B82F6]">Horizon</span> Portfolio
+                </span>
+                <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest italic">
+                  Designed for <span className="text-[#F97316]">Motion</span>
+                </span>
              </div>
-             <div className="w-10 h-10 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center">
-                <div className="w-1.5 h-1.5 bg-[#1a1a1a] rounded-full animate-pulse" />
+             <div className="w-10 h-10 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center group">
+                <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#3B82F6] to-[#F97316] rounded-full animate-pulse group-hover:scale-150 transition-transform" />
              </div>
           </div>
         </div>

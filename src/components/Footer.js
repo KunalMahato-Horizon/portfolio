@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaInstagram, } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -17,7 +17,9 @@ export default function Footer() {
           </span>
           <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
             Let's create something <br /> 
-            <span className="text-white/20 italic">unforgettable.</span>
+            <span className="bg-gradient-to-r from-[#3B82F6] to-[#F97316] bg-clip-text text-transparent italic">
+              unforgettable.
+            </span>
           </h2>
         </div>
 
@@ -30,10 +32,10 @@ export default function Footer() {
             <motion.div 
               animate={{ y: [-80, 80] }}
               transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-              className="absolute top-0 left-0 w-full h-1/2 bg-white/40"
+              className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-[#3B82F6] to-[#F97316]"
             />
           </div>
-          <span className="text-[10px] font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-gray-500 group-hover:text-[#3B82F6] transition-colors">
             Top
           </span>
         </button>
@@ -42,27 +44,44 @@ export default function Footer() {
       {/* 2. MIDDLE ROW: Big Branding */}
       <div className="py-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-end gap-10">
         <h3 className="text-[15vw] md:text-[10vw] font-black tracking-tighter uppercase leading-[0.7] opacity-5 select-none">
-          HELIOS.
+          <span className="bg-gradient-to-r from-[#3B82F6] to-[#F97316] bg-clip-text text-transparent">
+            HORIZON.
+          </span>
         </h3>
         
         {/* Social Links as a Technical List */}
         <div className="flex flex-col items-start md:items-end gap-4">
-          <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest mb-2">Connect_Channels</p>
+          <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest mb-2">
+            Connect_<span className="text-[#3B82F6]">Channels</span>
+          </p>
           <div className="flex gap-8">
-            {[
-              { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/kunal-mahato-bb7551384?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", label: "LN" },
-              { icon: <FaGithub />, href: "https://github.com/KunalMahato-Horizon", label: "GH" },
-              { icon: <FaInstagram />, href: "https://www.instagram.com/code_with_horizon?igsh=MTUzYTdxajJtNDJ2Nw==", label: "IG" }
-            ].map((link, i) => (
-              <a 
-                key={i} 
-                href={link.href} 
-                className="text-xl text-white/40 hover:text-white transition-all duration-500 flex items-center gap-2 group cursor-none"
-              >
-                {link.icon}
-                <span className="text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">{link.label}</span>
-              </a>
-            ))}
+            <a 
+              href="https://www.linkedin.com/in/kunal-mahato-bb7551384?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl text-white/40 hover:text-[#3B82F6] transition-all duration-500 flex items-center gap-2 group cursor-none"
+            >
+              <FaLinkedin />
+              <span className="text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">LN</span>
+            </a>
+            <a 
+              href="https://github.com/KunalMahato-Horizon" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl text-white/40 hover:text-[#F97316] transition-all duration-500 flex items-center gap-2 group cursor-none"
+            >
+              <FaGithub />
+              <span className="text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">GH</span>
+            </a>
+            <a 
+              href="https://www.instagram.com/code_with_horizon?igsh=MTUzYTdxajJtNDJ2Nw==" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl text-white/40 hover:text-[#3B82F6] transition-all duration-500 flex items-center gap-2 group cursor-none"
+            >
+              <FaInstagram />
+              <span className="text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">IG</span>
+            </a>
           </div>
         </div>
       </div>
@@ -70,12 +89,12 @@ export default function Footer() {
       {/* 3. BOTTOM ROW: Metadata */}
       <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[9px] font-mono text-gray-600 uppercase tracking-[0.4em]">
         <div className="flex gap-8">
-          <span>Design: Helios Studio</span>
-          <span className="hidden md:block">Dev: React + Framer</span>
+          <span>Design: <span className="text-[#3B82F6]">Horizon</span> Build</span>
+          <span className="hidden md:block">Dev: <span className="text-[#F97316]">React</span> + Framer</span>
         </div>
-        <p>© {currentYear} Kunal Mahato. All rights reserved.</p>
+        <p>© {currentYear} <span className="text-[#3B82F6]">Kunal Mahato</span>. All rights reserved.</p>
         <div className="hidden md:block">
-           Available for worldwide sync // 2026
+          Available for <span className="text-[#F97316]">worldwide sync</span> {"// 2026"}
         </div>
       </div>
     </footer>

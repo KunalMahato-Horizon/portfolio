@@ -1,7 +1,6 @@
 import { motion, useTransform, useScroll, useSpring } from "framer-motion";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom"; // If using React Router
-// OR use next/link if using Next.js
+import { Link } from "react-router-dom";
 
 // Import your local images
 import anojPortfolio from "../images/Anoj_portfolio.png";
@@ -15,7 +14,6 @@ const projects = [
     cat: "Portfolio Design", 
     img: anojPortfolio,
     liveLink: "https://travel-portfolio-peach.vercel.app/",
-    caseStudy: "#"
   },
   { 
     id: "02", 
@@ -23,7 +21,6 @@ const projects = [
     cat: "Foundation Template", 
     img: sonvitriFoundation,
     liveLink: "https://ngo-virid-xi.vercel.app/",
-    caseStudy: "#"
   },
   { 
     id: "03", 
@@ -31,7 +28,6 @@ const projects = [
     cat: "Creative Portfolio", 
     img: videoEditorTemplate,
     liveLink: "https://video-editor-portfolio-vert.vercel.app/",
-    caseStudy: "#"
   },
 ];
 
@@ -84,7 +80,7 @@ export default function Projects() {
               <h3 className="text-6xl md:text-8xl lg:text-[8vw] font-black tracking-tighter uppercase leading-[0.85] text-[#1a1a1a] drop-shadow-2xl mix-blend-difference text-white">
                 VIEW
                 <span className="block">ALL</span>
-                <span className="block text-[#1a1a1a]/50">WORK</span>
+                <span className="block text-[#3B82F6]">WORK</span>
               </h3>
             </div>
 
@@ -104,13 +100,13 @@ export default function Projects() {
                 
                 {/* Hover Overlay */}
                 <motion.div 
-                  className="absolute inset-0 bg-[#1a1a1a]/80 backdrop-blur-sm flex items-center justify-center"
+                  className="absolute inset-0 bg-gradient-to-r from-[#3B82F6]/90 to-[#F97316]/90 backdrop-blur-sm flex items-center justify-center"
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 >
                   <div className="flex flex-col items-center gap-4">
-                    <span className="px-6 py-3 bg-white text-[#1a1a1a] text-sm font-bold uppercase tracking-widest rounded-full">
+                    <span className="px-6 py-3 bg-white text-[#1a1a1a] text-sm font-bold uppercase tracking-widest rounded-full hover:scale-105 transition-transform">
                       View Full Portfolio →
                     </span>
                     <span className="text-white text-xs uppercase tracking-widest">
@@ -128,8 +124,8 @@ export default function Projects() {
                 className="group/btn flex items-center gap-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#1a1a1a] transition-all duration-300 pointer-events-auto"
               >
                 Explore All Work
-                <div className="w-8 md:w-12 h-[1px] bg-[#1a1a1a] group-hover/btn:w-16 transition-all duration-300"></div>
-                <span className="text-xs opacity-50 group-hover/btn:translate-x-2 transition-transform">→</span>
+                <div className="w-8 md:w-12 h-[1px] bg-gradient-to-r from-[#3B82F6] to-[#F97316] group-hover/btn:w-16 transition-all duration-300"></div>
+                <span className="text-xs opacity-50 group-hover/btn:translate-x-2 group-hover/btn:text-[#3B82F6] transition-all">→</span>
               </Link>
             </div>
           </div>
@@ -148,7 +144,7 @@ export default function Projects() {
             <div className="w-32 md:w-64 h-[2px] bg-[#1a1a1a]/10 relative overflow-hidden pointer-events-auto">
               <motion.div 
                 style={{ scaleX: scrollYProgress }} 
-                className="absolute inset-0 bg-[#1a1a1a] origin-left"
+                className="absolute inset-0 bg-gradient-to-r from-[#3B82F6] to-[#F97316] origin-left"
               />
             </div>
             <span className="text-xs font-mono font-bold">0{projects.length + 1}</span>
@@ -164,11 +160,11 @@ export default function Projects() {
         >
           <Link 
             to="/portfolio"
-            className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest hover:opacity-50 transition-opacity cursor-none"
+            className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest hover:opacity-50 transition-opacity cursor-none group"
           >
             <span>Full Portfolio</span>
-            <div className="w-8 h-[1px] bg-[#1a1a1a]"></div>
-            <span className="text-lg">→</span>
+            <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-[#F97316] group-hover:w-12 transition-all"></div>
+            <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </motion.div>
 
@@ -177,7 +173,7 @@ export default function Projects() {
   );
 }
 
-function ProjectCard({ project, progress }) {
+function ProjectCard({ project, progress, index }) {
   const [isHovered, setIsHovered] = useState(false);
   
   const imageX = useTransform(progress, [0, 1], ["-15%", "15%"]);
@@ -192,17 +188,32 @@ function ProjectCard({ project, progress }) {
       {/* Grid-Breaking Typography */}
       <div className="absolute top-[15%] md:top-[20%] left-0 md:-left-12 z-20 pointer-events-none">
         <div className="flex items-center gap-4 mb-2 md:mb-4">
-          <span className="text-[10px] md:text-xs font-mono font-bold tracking-[0.4em] text-[#1a1a1a] uppercase">
+          <span className={`text-[10px] md:text-xs font-mono font-bold tracking-[0.4em] uppercase ${
+            project.id === "01" ? "text-[#3B82F6]" : 
+            project.id === "02" ? "text-[#F97316]" : 
+            "text-[#1a1a1a]"
+          }`}>
              {project.id}
           </span>
-          <div className="h-[1px] w-8 bg-[#1a1a1a]"></div>
-          <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#1a1a1a]">
+          <div className={`h-[1px] w-8 ${
+            project.id === "01" ? "bg-[#3B82F6]" : 
+            project.id === "02" ? "bg-[#F97316]" : 
+            "bg-[#1a1a1a]"
+          }`}></div>
+          <span className={`text-[10px] md:text-xs font-bold uppercase tracking-widest ${
+            project.id === "01" ? "text-[#3B82F6]" : 
+            project.id === "02" ? "text-[#F97316]" : 
+            "text-[#1a1a1a]"
+          }`}>
              {project.cat}
           </span>
         </div>
 
         <h3 className="text-6xl md:text-8xl lg:text-[8vw] font-black tracking-tighter uppercase leading-[0.85] text-[#1a1a1a] drop-shadow-2xl mix-blend-difference text-white">
           {project.title}
+          {project.id === "03" && (
+            <span className="text-[#F97316] text-sm ml-2 align-top">✦</span>
+          )}
         </h3>
       </div>
 
@@ -221,35 +232,24 @@ function ProjectCard({ project, progress }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.3 }}
-          className="absolute inset-0 bg-[#1a1a1a]/80 backdrop-blur-sm flex items-center justify-center z-30"
+          className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/90 to-[#1a1a1a]/80 backdrop-blur-sm flex items-center justify-center z-30"
         >
-          <div className="flex flex-col items-center gap-4">
-            <motion.a
-              href={project.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: isHovered ? 0 : 20, opacity: isHovered ? 1 : 0 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-              className="px-6 py-3 bg-white text-[#1a1a1a] text-sm font-bold uppercase tracking-widest rounded-full hover:bg-[#e3e3e3] transition-colors duration-300 cursor-none"
-              onClick={(e) => e.stopPropagation()}
-            >
-              Live Preview
-            </motion.a>
-            
-            <motion.a
-              href={project.caseStudy || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: isHovered ? 0 : 20, opacity: isHovered ? 1 : 0 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
-              className="text-white text-xs uppercase tracking-widest hover:underline cursor-none"
-              onClick={(e) => e.stopPropagation()}
-            >
-              Case Study
-            </motion.a>
-          </div>
+          <motion.a
+            href={project.liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: isHovered ? 0 : 20, opacity: isHovered ? 1 : 0 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
+            className={`px-6 py-3 text-sm font-bold uppercase tracking-widest rounded-full transition-all duration-300 cursor-none ${
+              project.id === "01" ? "bg-[#3B82F6] hover:bg-[#3B82F6]/80" :
+              project.id === "02" ? "bg-[#F97316] hover:bg-[#F97316]/80" :
+              "bg-white hover:bg-[#e3e3e3] text-[#1a1a1a]"
+            } text-white`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            Live Preview {project.id === "01" && "→"}
+          </motion.a>
         </motion.div>
       </div>
 
@@ -261,20 +261,16 @@ function ProjectCard({ project, progress }) {
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="group/live flex items-center gap-3 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#1a1a1a] transition-all duration-300 pointer-events-auto md:hidden"
+          className={`group/live flex items-center gap-3 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 pointer-events-auto ${
+            project.id === "01" ? "text-[#3B82F6] hover:text-[#3B82F6]/70" :
+            project.id === "02" ? "text-[#F97316] hover:text-[#F97316]/70" :
+            "text-[#1a1a1a] hover:text-[#1a1a1a]/70"
+          }`}
         >
           <span>Live Demo</span>
           <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
           </svg>
-        </motion.a>
-
-        <motion.a 
-          href={project.caseStudy || "#"}
-          className="group/btn flex items-center gap-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#1a1a1a] transition-all duration-300 pointer-events-auto ml-auto"
-        >
-           View Case Study 
-           <div className="w-8 md:w-12 h-[1px] bg-[#1a1a1a] group-hover/btn:w-16 transition-all duration-300"></div>
         </motion.a>
       </div>
 
@@ -285,10 +281,14 @@ function ProjectCard({ project, progress }) {
         transition={{ duration: 0.2 }}
         className="absolute bottom-[15%] left-[5%] z-40 hidden md:block pointer-events-none"
       >
-        <div className="bg-[#1a1a1a] text-white text-[8px] px-2 py-1 rounded-full uppercase tracking-widest">
+        <div className={`text-white text-[8px] px-2 py-1 rounded-full uppercase tracking-widest ${
+          project.id === "01" ? "bg-[#3B82F6]" :
+          project.id === "02" ? "bg-[#F97316]" :
+          "bg-[#1a1a1a]"
+        }`}>
           Hover image for live preview
         </div>
       </motion.div>
     </div>
   );
-} 
+}

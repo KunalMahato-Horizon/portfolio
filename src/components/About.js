@@ -31,7 +31,9 @@ export default function AboutSection() {
           </span>
           <h2 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] uppercase">
             CREATIVE<br />
-            <span className="opacity-40 italic font-light">DEVELOPER</span>
+            <span className="opacity-40 italic font-light">
+              <span className="text-[#3B82F6] opacity-100">DEVELOPER</span>
+            </span>
           </h2>
         </motion.div>
 
@@ -45,21 +47,23 @@ export default function AboutSection() {
               <span className="opacity-40"> clean, interactive interfaces.</span>
             </p>
             <p className="text-lg opacity-60 max-w-xl leading-relaxed">
-              I balance logic and aesthetics to build websites that don't just work, but feel right. 
-              Currently, I'm deep-diving into React and exploring how motion can tell a better story.
+              I balance logic and aesthetics to build websites that don't just work, but 
+              <span className="text-[#3B82F6] opacity-100"> feel right</span>. 
+              Currently, I'm deep-diving into React and exploring how 
+              <span className="text-[#F97316] opacity-100"> motion</span> can tell a better story.
             </p>
             
             {/* The Big Link to About Page */}
             <div className="pt-8">
               <Link to="/about" className="group inline-flex items-center gap-6">
-                <div className="w-16 h-16 rounded-full border border-[#1a1a1a] flex items-center justify-center group-hover:bg-[#1a1a1a] group-hover:text-[#e3e3e3] transition-all duration-500">
-                  <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                <div className="w-16 h-16 rounded-full border border-[#1a1a1a] flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-[#3B82F6] group-hover:to-[#F97316] group-hover:border-transparent transition-all duration-500">
+                  <span className="text-2xl group-hover:translate-x-1 group-hover:text-white transition-all">→</span>
                 </div>
                 <div>
                   <span className="text-xs font-mono uppercase tracking-[0.3em] block opacity-40 group-hover:opacity-100 transition-opacity">
                     Curious?
                   </span>
-                  <span className="text-xl font-black uppercase tracking-tighter">
+                  <span className="text-xl font-black uppercase tracking-tighter group-hover:text-[#3B82F6] transition-colors">
                     Read Full Story
                   </span>
                 </div>
@@ -72,22 +76,31 @@ export default function AboutSection() {
             <div>
               <h4 className="text-[10px] font-mono opacity-30 uppercase tracking-[0.4em] mb-6">Process</h4>
               <ul className="space-y-4 text-sm font-bold uppercase tracking-tight">
-                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2">
-                  <span>Learning</span> <span className="opacity-30">React & UI</span>
+                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2 group">
+                  <span>Learning</span> 
+                  <span className="opacity-30 group-hover:text-[#3B82F6] group-hover:opacity-100 transition-colors">React & UI</span>
                 </li>
-                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2">
-                  <span>Building</span> <span className="opacity-30">Responsive Sites</span>
+                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2 group">
+                  <span>Building</span> 
+                  <span className="opacity-30 group-hover:text-[#3B82F6] group-hover:opacity-100 transition-colors">Responsive Sites</span>
                 </li>
-                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2">
-                  <span>Exploring</span> <span className="opacity-30">3D & Motion</span>
+                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2 group">
+                  <span>Exploring</span> 
+                  <span className="opacity-30 group-hover:text-[#F97316] group-hover:opacity-100 transition-colors">3D & Motion</span>
                 </li>
               </ul>
             </div>
 
-            <div className="p-6 bg-[#1a1a1a] text-[#e3e3e3] rounded-2xl">
-              <span className="text-[9px] font-mono opacity-40 uppercase block mb-3 underline">Latest Status</span>
-              <p className="text-sm font-medium leading-relaxed">
-                Open for freelance projects and collaborations that push creative boundaries.
+            <div className="p-6 bg-[#1a1a1a] text-[#e3e3e3] rounded-2xl relative overflow-hidden group">
+              {/* Gradient accent on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#3B82F6]/10 to-[#F97316]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <span className="text-[9px] font-mono opacity-40 uppercase block mb-3 underline relative z-10">
+                Latest Status
+              </span>
+              <p className="text-sm font-medium leading-relaxed relative z-10">
+                Open for freelance projects and collaborations that 
+                <span className="text-[#3B82F6]"> push creative boundaries</span>.
               </p>
             </div>
           </div>

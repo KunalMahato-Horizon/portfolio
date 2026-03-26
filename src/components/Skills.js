@@ -2,14 +2,14 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
 const skillGroups = [
-  { name: "JavaScript", x: -20, y: -15, type: "Logic", id: "js" },
-  { name: "React", x: 10, y: -25, type: "Library", id: "react" },
-  { name: "Blender 3D", x: -30, y: 15, type: "Motion", id: "blender" },
-  { name: "Tailwind", x: 25, y: 10, type: "Design", id: "tw" },
-  { name: "Three.js", x: 35, y: -10, type: "Spatial", id: "three" },
-  { name: "Framer Motion", x: -5, y: 30, type: "Anim", id: "fm" },
-  { name: "Figma", x: -35, y: -30, type: "UI/UX", id: "figma" },
-  { name: "Node.js", x: 15, y: 25, type: "Backend", id: "node" },
+  { name: "JavaScript", x: -20, y: -15, type: "Logic", id: "js", color: "#3B82F6" },
+  { name: "React", x: 10, y: -25, type: "Library", id: "react", color: "#3B82F6" },
+  { name: "Blender 3D", x: -30, y: 15, type: "Motion", id: "blender", color: "#F97316" },
+  { name: "Tailwind", x: 25, y: 10, type: "Design", id: "tw", color: "#3B82F6" },
+  { name: "Three.js", x: 35, y: -10, type: "Spatial", id: "three", color: "#3B82F6" },
+  { name: "Framer Motion", x: -5, y: 30, type: "Anim", id: "fm", color: "#F97316" },
+  { name: "Figma", x: -35, y: -30, type: "UI/UX", id: "figma", color: "#3B82F6" },
+  { name: "Node.js", x: 15, y: 25, type: "Backend", id: "node", color: "#F97316" },
 ];
 
 export default function Skills() {
@@ -56,7 +56,9 @@ export default function Skills() {
           <span>LAT_X: <motion.span>{useTransform(mouseX, v => v.toFixed(3))}</motion.span></span>
           <span>LNG_Y: <motion.span>{useTransform(mouseY, v => v.toFixed(3))}</motion.span></span>
         </div>
-        <span className="mt-1 uppercase tracking-widest">System_Status: Active</span>
+        <span className="mt-1 uppercase tracking-widest">
+          System_Status: <span className="text-[#3B82F6]">Active</span>
+        </span>
       </div>
 
       <div className="container mx-auto px-6 relative z-10 flex flex-col items-center">
@@ -67,14 +69,13 @@ export default function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-[18vw] lg:text-[12vw] font-black tracking-tighter uppercase leading-[0.8] opacity-10 lg:opacity-100"
           >
-            Toolkit
+            <span className="bg-gradient-to-r from-[#3B82F6] to-[#F97316] bg-clip-text text-transparent">
+              TOOLKIT
+            </span>
           </motion.h2>
         </div>
 
-        {/* 3. THE NODE VIEWPORT 
-            On Mobile: A clean, wrap-around flex container.
-            On Desktop: A floating absolute-positioned field.
-        */}
+        {/* 3. THE NODE VIEWPORT */}
         <div className="relative w-full min-h-[50vh] lg:h-screen flex flex-wrap justify-center items-center gap-4 lg:block">
           
           {/* SVG Lines - Hidden on Mobile */}
@@ -84,6 +85,8 @@ export default function Skills() {
               <line x1="50%" y1="50%" x2="65%" y2="65%" stroke="black" strokeWidth="1" />
               <line x1="35%" y1="35%" x2="25%" y2="60%" stroke="black" strokeWidth="1" />
               <line x1="65%" y1="65%" x2="75%" y2="40%" stroke="black" strokeWidth="1" />
+              <line x1="50%" y1="50%" x2="45%" y2="75%" stroke="#3B82F6" strokeWidth="1.5" strokeDasharray="4 4" />
+              <line x1="50%" y1="50%" x2="55%" y2="25%" stroke="#F97316" strokeWidth="1.5" strokeDasharray="4 4" />
             </svg>
           )}
 
@@ -100,7 +103,7 @@ export default function Skills() {
 
         <div className="mt-12 lg:absolute lg:bottom-10 lg:left-1/2 lg:-translate-x-1/2 text-center">
             <p className="text-[10px] font-mono uppercase tracking-[0.4em] text-gray-400">
-              Topology // 2.6.0
+              <span className="text-[#3B82F6]">Topology</span>{" // 2.6.0"}
             </p>
         </div>
       </div>
@@ -112,6 +115,9 @@ function SkillNode({ skill, smoothX, smoothY, isMobile }) {
   // Desktop Parallax movement
   const moveX = useTransform(smoothX, [-0.5, 0.5], [skill.x - 30, skill.x + 30]);
   const moveY = useTransform(smoothY, [-0.5, 0.5], [skill.y - 30, skill.y + 30]);
+
+  const isBlue = skill.color === "#3B82F6";
+  const isOrange = skill.color === "#F97316";
 
   return (
     <motion.div
@@ -125,16 +131,26 @@ function SkillNode({ skill, smoothX, smoothY, isMobile }) {
       className="lg:-translate-x-1/2 lg:-translate-y-1/2 group"
     >
       <div className="relative flex items-center">
-        {/* Node Dot */}
-        <div className="hidden lg:block w-1.5 h-1.5 bg-[#1a1a1a] rounded-full mr-4 group-hover:scale-[2] transition-transform duration-500"></div>
+        {/* Node Dot - Colored based on skill type */}
+        <div className={`hidden lg:block w-1.5 h-1.5 rounded-full mr-4 group-hover:scale-[2] transition-transform duration-500 ${
+          isBlue ? "bg-[#3B82F6]" : isOrange ? "bg-[#F97316]" : "bg-[#1a1a1a]"
+        }`}></div>
         
         {/* Label Card */}
-        <div className="px-4 py-2 lg:px-6 lg:py-3 border border-[#1a1a1a]/10 bg-[#e3e3e3]/80 backdrop-blur-md rounded-sm group-hover:bg-[#1a1a1a] group-hover:text-[#e3e3e3] transition-all duration-500 shadow-sm">
+        <div className={`px-4 py-2 lg:px-6 lg:py-3 border transition-all duration-500 shadow-sm group-hover:backdrop-blur-md ${
+          isBlue ? "border-[#3B82F6]/20 group-hover:bg-[#3B82F6] group-hover:border-[#3B82F6] group-hover:text-white" :
+          isOrange ? "border-[#F97316]/20 group-hover:bg-[#F97316] group-hover:border-[#F97316] group-hover:text-white" :
+          "border-[#1a1a1a]/10 group-hover:bg-[#1a1a1a] group-hover:text-[#e3e3e3]"
+        } bg-[#e3e3e3]/80 rounded-sm`}>
           <div className="flex items-center gap-3">
-            <span className="text-[8px] font-mono opacity-30 group-hover:opacity-60 border-r border-current pr-2">
+            <span className={`text-[8px] font-mono opacity-30 group-hover:opacity-60 border-r border-current pr-2 ${
+              group => group.hover ? "border-white" : "border-current"
+            }`}>
               {skill.id.toUpperCase()}
             </span>
-            <h3 className="text-xs lg:text-lg font-bold tracking-tight uppercase whitespace-nowrap">
+            <h3 className={`text-xs lg:text-lg font-bold tracking-tight uppercase whitespace-nowrap transition-colors ${
+              isBlue ? "group-hover:text-white" : isOrange ? "group-hover:text-white" : "group-hover:text-[#e3e3e3]"
+            }`}>
               {skill.name}
             </h3>
           </div>
@@ -142,9 +158,11 @@ function SkillNode({ skill, smoothX, smoothY, isMobile }) {
 
         {/* Desktop Detail Data */}
         <div className="absolute -right-16 hidden xl:group-hover:block pointer-events-none">
-            <div className="flex flex-col font-mono text-[8px] text-gray-400 leading-none">
-                <span>TYPE: {skill.type}</span>
-                <span>STATUS: OK</span>
+            <div className="flex flex-col font-mono text-[8px] leading-none">
+                <span className={`${isBlue ? "text-[#3B82F6]" : isOrange ? "text-[#F97316]" : "text-gray-400"}`}>
+                  TYPE: {skill.type}
+                </span>
+                <span className="text-gray-400">STATUS: OK</span>
             </div>
         </div>
       </div>
