@@ -1,26 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import Lenis from "@studio-freight/lenis";
 import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 
-import GlobalCursor from "../components/GlobalCursor";
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Projects from "../components/Projects";
-import Skills from "../components/Skills";
-import Contact from "../components/Contact";
-import Footer from "../components/Footer";
+// Lazy load components for better performance
+const GlobalCursor = lazy(() => import("../components/GlobalCursor"));
+const Navbar = lazy(() => import("../components/Navbar"));
+const Hero = lazy(() => import("../components/Hero"));
+const About = lazy(() => import("../components/About"));
+const Projects = lazy(() => import("../components/Projects"));
+const Skills = lazy(() => import("../components/Skills"));
+const Contact = lazy(() => import("../components/Contact"));
+const Footer = lazy(() => import("../components/Footer"));
 
-// Loading Spinner Component
+// Loading spinner component
 const LoadingSpinner = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-[#e3e3e3]">
     <div className="w-12 h-12 border-4 border-[#1a1a1a] border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
 
-// Lenis Configuration
+// Lenis scroll configuration
 const LENIS_CONFIG = {
   duration: 1.2,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -35,23 +36,26 @@ const LENIS_CONFIG = {
 function Home({ initialLoad = false }) {
   const [isLoading, setIsLoading] = useState(initialLoad);
 
-  // Initialize Buttery Smooth Scrolling
+  // Initialize smooth scrolling
   useEffect(() => {
     const lenis = new Lenis(LENIS_CONFIG);
+    let animationFrameId;
 
-    function raf(time) {
+    const raf = (time) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+      animationFrameId = requestAnimationFrame(raf);
+    };
 
-    requestAnimationFrame(raf);
+    animationFrameId = requestAnimationFrame(raf);
 
+    // Cleanup
     return () => {
+      cancelAnimationFrame(animationFrameId);
       lenis.destroy();
     };
   }, []);
 
-  // Simulate initial loading if needed
+  // Handle initial loading state
   useEffect(() => {
     if (initialLoad) {
       const timer = setTimeout(() => setIsLoading(false), 1000);
@@ -73,7 +77,7 @@ function Home({ initialLoad = false }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      {/* Page Transition Wrapper */}
+      {/* Page transition animation */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -84,29 +88,29 @@ function Home({ initialLoad = false }) {
         }}
         className="min-h-screen bg-[#e3e3e3] text-[#1a1a1a] cursor-none selection:bg-[#1a1a1a] selection:text-[#e3e3e3]"
       >
-        <GlobalCursor />
-        <Navbar />
-        
-        <main>
-          <Hero />
-          <About />
-          <Projects />
-          <Skills />
-          <Contact />
-        </main>
-        
-        <Footer />
+        <Suspense fallback={<LoadingSpinner />}>
+          <GlobalCursor />
+          <Navbar />
+          
+          <main>
+            <Hero />
+            <About />
+            <Projects />
+            <Skills />
+            <Contact />
+          </main>
+          
+          <Footer />
+        </Suspense>
       </motion.div>
     </>
   );
 }
 
-// PropTypes for better type checking
 Home.propTypes = {
   initialLoad: PropTypes.bool
 };
 
-// Default props
 Home.defaultProps = {
   initialLoad: false
 };

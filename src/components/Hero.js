@@ -1,5 +1,5 @@
-import { motion, useMotionValue, useSpring, } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import heroImage from '../images/hero.JPG';
 
 export default function Hero() {
@@ -8,13 +8,14 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
 
+  // Cursor motion values with spring physics
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
   const smoothX = useSpring(cursorX, springConfig);
   const smoothY = useSpring(cursorY, springConfig);
 
-  // Check for mobile
+  // Check for mobile devices
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -24,6 +25,7 @@ export default function Hero() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Handle cursor movement
   useEffect(() => {
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
@@ -36,11 +38,13 @@ export default function Hero() {
         setMousePosition({ x, y });
       }
     };
+    
     window.addEventListener("mousemove", moveCursor);
     return () => window.removeEventListener("mousemove", moveCursor);
   }, [cursorX, cursorY, isMobile]);
 
-  const cursorVariants = {
+  // Memoized cursor variants to prevent re-renders
+  const cursorVariants = useMemo(() => ({
     default: { 
       width: 16, 
       height: 16, 
@@ -59,7 +63,12 @@ export default function Hero() {
       backgroundColor: "#3B82F6", 
       mixBlendMode: "difference" 
     }
-  };
+  }), [isMobile]);
+
+  // Handle hover state changes
+  const handleImageHover = useCallback(() => setHoverState("image"), []);
+  const handleLinkHover = useCallback(() => setHoverState("link"), []);
+  const handleDefaultHover = useCallback(() => setHoverState("default"), []);
 
   return (
     <section 
@@ -67,7 +76,7 @@ export default function Hero() {
       ref={containerRef}
       className="relative w-full min-h-screen bg-[#e3e3e3] overflow-x-hidden md:overflow-hidden cursor-none"
     >
-      {/* Custom Cursor - hidden on mobile */}
+      {/* Custom cursor - hidden on mobile */}
       {!isMobile && (
         <motion.div
           variants={cursorVariants}
@@ -92,7 +101,7 @@ export default function Hero() {
         </motion.div>
       )}
 
-      {/* Subtle background texture */}
+      {/* Background texture */}
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 20px 20px, #1a1a1a 1px, transparent 1px)`,
@@ -100,10 +109,10 @@ export default function Hero() {
         }} />
       </div>
 
-      {/* Main content container */}
+      {/* Main content */}
       <div className="relative min-h-screen md:h-screen flex flex-col md:block max-w-7xl mx-auto px-6 md:px-8 py-12 md:py-0">
         
-        {/* Typography - responsive positioning */}
+        {/* Hero title */}
         <div className="relative md:absolute z-10 left-0 md:left-[4%] lg:left-[6%] top-0 md:top-[18%] lg:top-[15%] w-full md:w-auto pt-8 md:pt-0">
           <motion.h1 
             initial={{ y: 50, opacity: 0 }}
@@ -124,7 +133,7 @@ export default function Hero() {
             </span>
           </motion.h1>
           
-          {/* Small descriptor - hidden on mobile */}
+          {/* Title descriptor */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -138,22 +147,21 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Image - responsive positioning */}
+        {/* Hero image */}
         <motion.div
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.2, delay: 0.3 }}
-          onMouseEnter={() => setHoverState("image")}
-          onMouseLeave={() => setHoverState("default")}
+          onMouseEnter={handleImageHover}
+          onMouseLeave={handleDefaultHover}
           className="relative md:absolute z-0 w-full md:w-[45vw] lg:w-[32vw] mx-auto md:mx-0 md:right-[5%] lg:right-[8%] mt-8 md:mt-0 md:top-[12%] lg:top-[10%]"
         >
-          {/* Frame */}
           <div className="relative group">
-            {/* Outer frame lines - hidden on mobile */}
+            {/* Image frame */}
             <div className="absolute -inset-4 border border-white/10 rounded-sm hidden md:block"></div>
             <div className="absolute -inset-2 border border-white/5 rounded-sm hidden md:block"></div>
             
-            {/* Image container */}
+            {/* Image with parallax effect */}
             <motion.div 
               className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-lg md:rounded-sm"
               animate={!isMobile ? {
@@ -165,14 +173,15 @@ export default function Hero() {
               <img 
                 src={heroImage} 
                 alt="Kunal Mahato"
+                loading="eager" // Hero image should load immediately
                 className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700"
               />
               
-              {/* Subtle overlay */}
+              {/* Image overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
             </motion.div>
 
-            {/* Minimal caption - hidden on mobile */}
+            {/* Image caption */}
             <div className="absolute -bottom-8 right-0 items-center gap-3 text-white/40 text-xs hidden md:flex">
               <span>—</span>
               <span className="text-[#3B82F6]">2024</span>
@@ -180,7 +189,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Bottom section with description and CTA */}
+        {/* Bottom section */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -204,8 +213,8 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto relative z-30">
               <a 
                 href="#contact"
-                onMouseEnter={() => setHoverState("link")}
-                onMouseLeave={() => setHoverState("default")}
+                onMouseEnter={handleLinkHover}
+                onMouseLeave={handleDefaultHover}
                 className="group relative px-6 py-3 bg-[#1a1a1a] text-[#e3e3e3] rounded-full overflow-hidden w-full sm:w-auto text-center cursor-none"
               >
                 <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
@@ -216,8 +225,8 @@ export default function Hero() {
               
               <a 
                 href="#work" 
-                onMouseEnter={() => setHoverState("link")}
-                onMouseLeave={() => setHoverState("default")}
+                onMouseEnter={handleLinkHover}
+                onMouseLeave={handleDefaultHover}
                 className="px-6 py-3 bg-[#1a1a1a] text-[#e3e3e3] rounded-full text-sm font-medium hover:bg-[#2a2a2a] transition-all duration-300 w-full sm:w-auto text-center cursor-none shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group"
               >
                 View Work
@@ -233,7 +242,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Decorative vertical line - hidden on mobile */}
+        {/* Decorative elements */}
         <motion.div
           initial={{ height: 0 }}
           animate={{ height: "30%" }}
@@ -241,7 +250,7 @@ export default function Hero() {
           className="absolute left-[2%] top-[15%] w-px bg-gradient-to-b from-transparent via-[#3B82F6]/30 to-transparent hidden md:block"
         />
 
-        {/* Scroll indicator - hidden on mobile */}
+        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

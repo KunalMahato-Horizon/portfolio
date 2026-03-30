@@ -1,30 +1,39 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
   
+  // Scroll animations
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
   
+  // Transform scroll progress to opacity values
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
+  // Memoized process items to prevent re-renders
+  const processItems = useMemo(() => [
+    { label: "Learning", value: "React & UI", color: "#3B82F6" },
+    { label: "Building", value: "Responsive Sites", color: "#3B82F6" },
+    { label: "Exploring", value: "3D & Motion", color: "#F97316" }
+  ], []);
 
   return (
     <section 
       ref={sectionRef}
       className="relative w-full min-h-screen bg-[#e3e3e3] text-[#1a1a1a] px-6 py-24 md:py-40 overflow-hidden"
     >
-      {/* Large Background Number - Keeps the 'Editorial' feel */}
-      <div className="absolute right-0 top-10 text-[30vw] font-black text-[#1a1a1a]/5 select-none leading-none">
+      {/* Large background number */}
+      <div className="absolute right-0 top-10 text-[30vw] font-black text-[#1a1a1a]/5 select-none leading-none pointer-events-none">
         01
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
         
-        {/* Header - Staggered & Bold */}
+        {/* Section header */}
         <motion.div style={{ opacity }} className="mb-24">
           <span className="text-[10px] font-mono opacity-40 uppercase tracking-[0.5em] mb-6 block">
             Inside the Mind
@@ -37,13 +46,13 @@ export default function AboutSection() {
           </h2>
         </motion.div>
 
-        {/* Content Grid */}
+        {/* Content grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-[#1a1a1a]/10 pt-16">
           
-          {/* Left Side: Shortened Bio */}
+          {/* Left side - Bio */}
           <div className="md:col-span-7 space-y-8">
             <p className="text-2xl md:text-3xl font-medium leading-tight tracking-tight">
-              I’m Kunal — a frontend developer focused on turning ideas into 
+              I'm Kunal — a frontend developer focused on turning ideas into 
               <span className="opacity-40"> clean, interactive interfaces.</span>
             </p>
             <p className="text-lg opacity-60 max-w-xl leading-relaxed">
@@ -53,9 +62,12 @@ export default function AboutSection() {
               <span className="text-[#F97316] opacity-100"> motion</span> can tell a better story.
             </p>
             
-            {/* The Big Link to About Page */}
+            {/* About page link */}
             <div className="pt-8">
-              <Link to="/about" className="group inline-flex items-center gap-6">
+              <Link 
+                to="/about" 
+                className="group inline-flex items-center gap-6 cursor-none"
+              >
                 <div className="w-16 h-16 rounded-full border border-[#1a1a1a] flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-[#3B82F6] group-hover:to-[#F97316] group-hover:border-transparent transition-all duration-500">
                   <span className="text-2xl group-hover:translate-x-1 group-hover:text-white transition-all">→</span>
                 </div>
@@ -71,28 +83,35 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Right Side: Quick Journey Snapshot */}
+          {/* Right side - Process & Status */}
           <div className="md:col-span-5 space-y-12 md:pl-12 md:border-l border-[#1a1a1a]/5">
+            
+            {/* Process list */}
             <div>
-              <h4 className="text-[10px] font-mono opacity-30 uppercase tracking-[0.4em] mb-6">Process</h4>
+              <h4 className="text-[10px] font-mono opacity-30 uppercase tracking-[0.4em] mb-6">
+                Process
+              </h4>
               <ul className="space-y-4 text-sm font-bold uppercase tracking-tight">
-                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2 group">
-                  <span>Learning</span> 
-                  <span className="opacity-30 group-hover:text-[#3B82F6] group-hover:opacity-100 transition-colors">React & UI</span>
-                </li>
-                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2 group">
-                  <span>Building</span> 
-                  <span className="opacity-30 group-hover:text-[#3B82F6] group-hover:opacity-100 transition-colors">Responsive Sites</span>
-                </li>
-                <li className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2 group">
-                  <span>Exploring</span> 
-                  <span className="opacity-30 group-hover:text-[#F97316] group-hover:opacity-100 transition-colors">3D & Motion</span>
-                </li>
+                {processItems.map((item, index) => (
+                  <li 
+                    key={index}
+                    className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2 group"
+                  >
+                    <span>{item.label}</span>
+                    <span 
+                      className="opacity-30 group-hover:opacity-100 transition-colors"
+                      style={{ color: `var(--hover-color, ${item.color})` }}
+                      onMouseEnter={(e) => e.currentTarget.style.setProperty('--hover-color', item.color)}
+                    >
+                      {item.value}
+                    </span>
+                  </li>
+                ))}
               </ul>
             </div>
 
+            {/* Status card */}
             <div className="p-6 bg-[#1a1a1a] text-[#e3e3e3] rounded-2xl relative overflow-hidden group">
-              {/* Gradient accent on hover */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#3B82F6]/10 to-[#F97316]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <span className="text-[9px] font-mono opacity-40 uppercase block mb-3 underline relative z-10">

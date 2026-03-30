@@ -1,15 +1,46 @@
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { useCallback, useMemo } from "react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+
+  // Scroll to top handler
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  // Memoize social links to prevent re-renders
+  const socialLinks = useMemo(() => [
+    { 
+      icon: FaLinkedin, 
+      href: "https://www.linkedin.com/in/kunal-mahato-bb7551384?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      color: "hover:text-[#3B82F6]",
+      label: "LN",
+      name: "LinkedIn"
+    },
+    { 
+      icon: FaGithub, 
+      href: "https://github.com/KunalMahato-Horizon",
+      color: "hover:text-[#F97316]",
+      label: "GH",
+      name: "GitHub"
+    },
+    { 
+      icon: FaInstagram, 
+      href: "https://www.instagram.com/code_with_horizon?igsh=MTUzYTdxajJtNDJ2Nw==",
+      color: "hover:text-[#3B82F6]",
+      label: "IG",
+      name: "Instagram"
+    }
+  ], []);
 
   return (
     <footer 
       className="relative h-[600px] w-full bg-[#1a1a1a] text-[#e3e3e3] flex flex-col justify-between p-8 md:p-20"
       style={{ clipPath: "polygon(0% 0, 100% 0, 100% 100%, 0 100%)" }}
     >
-      {/* 1. TOP ROW: The Call to Action */}
+      {/* Top section - CTA */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-12">
         <div className="max-w-2xl">
           <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-gray-500 mb-6 block">
@@ -23,9 +54,9 @@ export default function Footer() {
           </h2>
         </div>
 
-        {/* Back to Top - Vertical Line Style */}
+        {/* Back to top button */}
         <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={scrollToTop}
           className="group flex flex-col items-center gap-4 cursor-none self-end md:self-auto"
         >
           <div className="w-[1px] h-20 bg-white/10 relative overflow-hidden">
@@ -41,7 +72,7 @@ export default function Footer() {
         </button>
       </div>
 
-      {/* 2. MIDDLE ROW: Big Branding */}
+      {/* Middle section - Branding */}
       <div className="py-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-end gap-10">
         <h3 className="text-[15vw] md:text-[10vw] font-black tracking-tighter uppercase leading-[0.7] opacity-5 select-none">
           <span className="bg-gradient-to-r from-[#3B82F6] to-[#F97316] bg-clip-text text-transparent">
@@ -49,45 +80,32 @@ export default function Footer() {
           </span>
         </h3>
         
-        {/* Social Links as a Technical List */}
+        {/* Social links */}
         <div className="flex flex-col items-start md:items-end gap-4">
           <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest mb-2">
             Connect_<span className="text-[#3B82F6]">Channels</span>
           </p>
           <div className="flex gap-8">
-            <a 
-              href="https://www.linkedin.com/in/kunal-mahato-bb7551384?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xl text-white/40 hover:text-[#3B82F6] transition-all duration-500 flex items-center gap-2 group cursor-none"
-            >
-              <FaLinkedin />
-              <span className="text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">LN</span>
-            </a>
-            <a 
-              href="https://github.com/KunalMahato-Horizon" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xl text-white/40 hover:text-[#F97316] transition-all duration-500 flex items-center gap-2 group cursor-none"
-            >
-              <FaGithub />
-              <span className="text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">GH</span>
-            </a>
-            <a 
-              href="https://www.instagram.com/code_with_horizon?igsh=MTUzYTdxajJtNDJ2Nw==" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xl text-white/40 hover:text-[#3B82F6] transition-all duration-500 flex items-center gap-2 group cursor-none"
-            >
-              <FaInstagram />
-              <span className="text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">IG</span>
-            </a>
+            {socialLinks.map((social, index) => (
+              <a 
+                key={index}
+                href={social.href} 
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`text-xl text-white/40 ${social.color} transition-all duration-500 flex items-center gap-2 group cursor-none`}
+              >
+                <social.icon />
+                <span className="text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+                  {social.label}
+                </span>
+              </a>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* 3. BOTTOM ROW: Metadata */}
-      <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[9px] font-mono text-gray-600 uppercase tracking-[0.4em]">
+      {/* Bottom section - Metadata */}
+      <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[9px] font-mono text-gray-600 uppercase tracking-[0.4em] gap-4 md:gap-0">
         <div className="flex gap-8">
           <span>Design: <span className="text-[#3B82F6]">Horizon</span> Build</span>
           <span className="hidden md:block">Dev: <span className="text-[#F97316]">React</span> + Framer</span>
