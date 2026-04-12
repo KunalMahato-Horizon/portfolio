@@ -1,12 +1,26 @@
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import heroImage from '../images/hero.JPG';
+import heroKyro1 from '../images/hero-kyro-1.png';
+import heroKyro2 from '../images/hero-kyro-2.png';
+import heroKyro3 from '../images/hero-kyro-3.png';
 
 export default function Hero() {
   const [hoverState, setHoverState] = useState("default");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const containerRef = useRef(null);
+  
+  const heroImages = [heroKyro1, heroKyro2, heroKyro3];
+
+  // Auto-rotate images every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
   // Cursor motion values with spring physics
   const cursorX = useMotionValue(-100);
@@ -43,7 +57,7 @@ export default function Hero() {
     return () => window.removeEventListener("mousemove", moveCursor);
   }, [cursorX, cursorY, isMobile]);
 
-  // Memoized cursor variants to prevent re-renders
+  // Memoized cursor variants
   const cursorVariants = useMemo(() => ({
     default: { 
       width: 16, 
@@ -65,10 +79,96 @@ export default function Hero() {
     }
   }), [isMobile]);
 
-  // Handle hover state changes
   const handleImageHover = useCallback(() => setHoverState("image"), []);
   const handleLinkHover = useCallback(() => setHoverState("link"), []);
   const handleDefaultHover = useCallback(() => setHoverState("default"), []);
+
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+  }, [heroImages.length]);
+
+  const prevImage = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  }, [heroImages.length]);
+
+  // Unique transition effect: staggered corners
+  const cornerVariants = {
+    initial: { 
+      clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)"
+    },
+    animate: { 
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      transition: { 
+        duration: 0.8,
+        ease: [0.76, 0, 0.24, 1]
+      }
+    },
+    exit: { 
+      clipPath: "polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)",
+      transition: { 
+        duration: 0.6,
+        ease: [0.76, 0, 0.24, 1]
+      }
+    }
+  };
+
+  // Reveal from center
+  const centerRevealVariants = {
+    initial: { 
+      clipPath: "circle(0% at 50% 50%)"
+    },
+    animate: { 
+      clipPath: "circle(100% at 50% 50%)",
+      transition: { 
+        duration: 0.7,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      clipPath: "circle(0% at 50% 50%)",
+      transition: { 
+        duration: 0.5,
+        ease: "easeIn"
+      }
+    }
+  };
+
+  // Staggered stripes
+  const stripesVariants = {
+    initial: { 
+      clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)"
+    },
+    animate: { 
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      transition: { 
+        duration: 0.6,
+        delay: 0.2
+      }
+    },
+    exit: { 
+      clipPath: "polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)",
+      transition: { 
+        duration: 0.4
+      }
+    }
+  };
+
+  // Choose random transition on each change
+  const [transitionStyle, setTransitionStyle] = useState("corner");
+  
+  useEffect(() => {
+    const styles = ["corner", "center", "stripes"];
+    const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+    setTransitionStyle(randomStyle);
+  }, [currentImageIndex]);
+
+  const getTransitionVariants = () => {
+    switch(transitionStyle) {
+      case "center": return centerRevealVariants;
+      case "stripes": return stripesVariants;
+      default: return cornerVariants;
+    }
+  };
 
   return (
     <section 
@@ -147,19 +247,19 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Hero image */}
+        {/* Hero image with unique transitions */}
         <motion.div
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.2, delay: 0.3 }}
           onMouseEnter={handleImageHover}
           onMouseLeave={handleDefaultHover}
-          className="relative md:absolute z-0 w-full md:w-[45vw] lg:w-[32vw] mx-auto md:mx-0 md:right-[5%] lg:right-[8%] mt-8 md:mt-0 md:top-[12%] lg:top-[10%]"
+          className="relative z-0 w-full md:w-[45vw] lg:w-[32vw] mx-auto md:mx-0 md:absolute md:right-[5%] lg:right-[8%] mt-8 md:mt-0 md:top-[12%] lg:top-[10%]"
         >
           <div className="relative group">
             {/* Image frame */}
-            <div className="absolute -inset-4 border border-white/10 rounded-sm hidden md:block"></div>
-            <div className="absolute -inset-2 border border-white/5 rounded-sm hidden md:block"></div>
+            <div className="absolute -inset-4 border border-[#1a1a1a]/10 rounded-sm hidden md:block"></div>
+            <div className="absolute -inset-2 border border-[#1a1a1a]/5 rounded-sm hidden md:block"></div>
             
             {/* Image with parallax effect */}
             <motion.div 
@@ -170,21 +270,70 @@ export default function Hero() {
               } : {}}
               transition={{ type: "spring", stiffness: 50, damping: 30 }}
             >
-              <img 
-                src={heroImage} 
-                alt="Kunal Mahato"
-                loading="eager" // Hero image should load immediately
-                className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700"
-              />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImageIndex}
+                  className="absolute inset-0"
+                  variants={getTransitionVariants()}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                >
+                  <img 
+                    src={heroImages[currentImageIndex]} 
+                    alt={`Kunal Mahato`}
+                    className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700"
+                  />
+                </motion.div>
+              </AnimatePresence>
               
               {/* Image overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+              
+              {/* Minimalist navigation dots */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                {heroImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    className={`transition-all duration-300 cursor-none ${
+                      idx === currentImageIndex 
+                        ? 'w-6 h-1.5 bg-[#3B82F6]' 
+                        : 'w-1.5 h-1.5 bg-[#1a1a1a]/30 hover:bg-[#1a1a1a]/60'
+                    } rounded-full`}
+                    aria-label={`Go to image ${idx + 1}`}
+                  />
+                ))}
+              </div>
+              
+              {/* Navigation arrows */}
+              <button
+                onClick={prevImage}
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1a1a1a] rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-none z-20 shadow-md"
+                aria-label="Previous image"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M15 18l-6-6 6-6"/>
+                </svg>
+              </button>
+              
+              <button
+                onClick={nextImage}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1a1a1a] rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-none z-20 shadow-md"
+                aria-label="Next image"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6"/>
+                </svg>
+              </button>
             </motion.div>
 
-            {/* Image caption */}
-            <div className="absolute -bottom-8 right-0 items-center gap-3 text-white/40 text-xs hidden md:flex">
+            {/* Image counter */}
+            <div className="absolute -bottom-8 right-0 items-center gap-3 text-[#1a1a1a]/40 text-xs hidden md:flex">
               <span>—</span>
-              <span className="text-[#3B82F6]">2024</span>
+              <span className="text-[#3B82F6]">{String(currentImageIndex + 1).padStart(2, '0')}</span>
+              <span className="w-4 h-px bg-[#1a1a1a]/20"></span>
+              <span>{String(heroImages.length).padStart(2, '0')}</span>
             </div>
           </div>
         </motion.div>

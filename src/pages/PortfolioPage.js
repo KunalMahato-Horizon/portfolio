@@ -9,6 +9,7 @@ import anojPortfolio from "../images/Anoj_portfolio.png";
 import sonvitriFoundation from "../images/Sonvitri_Foundation-Template.png";
 import videoEditorTemplate from "../images/Video_Editor-Template.png";
 import photographerPortfolio from "../images/photographer-portfolio.png";
+import anjaliKumariPortfolio from "../images/Anjali_kumari_makeup-artist_portfolio.png"; // NEW IMPORT
 
 const projects = [
   {
@@ -63,6 +64,19 @@ const projects = [
     liveLink: "https://photographer-portfolio-theta.vercel.app/",
     codeLink: "https://github.com/KunalMahato-Horizon/photographer_portfolio"
   },
+  {
+    id: 5,  // NEW PROJECT - UPDATED ID
+    title: "ANJALI KUMARI",
+    category: "Makeup Artist Portfolio",
+    year: "2025",  // Current year
+    img: anjaliKumariPortfolio,
+    description: "Professional portfolio website for a makeup artist showcasing beauty services and work gallery.",
+    focus: "Visual branding & responsive design",
+    stack: ["React", "Tailwind", "Framer Motion"],
+    accent: "#EC4899",  // Pink/Makeup theme color
+    liveLink: "https://anjali-kumari-portfolio.vercel.app/",
+    codeLink: "https://github.com/KunalMahato-Horizon/anjali-kumari-portfolio"  // Update with actual repo if different
+  },
 ];
 
 // Generate categories from projects
@@ -94,10 +108,10 @@ export default function Portfolio() {
     <>
       <Helmet>
         <title>Portfolio | Kunal Mahato - Selected Works</title>
-        <meta name="description" content="Explore my portfolio of selected works including personal portfolios, NGO templates, and creative web projects. Built with React, Tailwind CSS, and modern web technologies." />
-        <meta name="keywords" content="portfolio, react projects, web development, frontend projects, creative templates" />
+        <meta name="description" content="Explore my portfolio of selected works including personal portfolios, NGO templates, creative web projects, and makeup artist portfolios. Built with React, Tailwind CSS, and modern web technologies." />
+        <meta name="keywords" content="portfolio, react projects, web development, frontend projects, creative templates, makeup artist portfolio" />
         <meta property="og:title" content="Portfolio | Kunal Mahato - Selected Works" />
-        <meta property="og:description" content="Explore my portfolio of selected works including personal portfolios, NGO templates, and creative web projects." />
+        <meta property="og:description" content="Explore my portfolio of selected works including personal portfolios, NGO templates, creative web projects, and makeup artist portfolios." />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
