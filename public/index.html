@@ -2,25 +2,89 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.ico" />
+
+    <!-- Responsive viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Browser / mobile theme -->
     <meta name="theme-color" content="#0f172a" />
+
+    <!-- Primary SEO -->
+    <title>Kunal Mahato | Frontend Developer & Freelancer</title>
+
     <meta
       name="description"
-      content="Portfolio website of Kunal Mahato - Web Developer | JavaScript | React | Node.js"
+      content="Kunal Mahato is a freelance frontend developer building modern web applications with JavaScript, React, Node.js, and other modern technologies."
     />
 
-    <!-- Apple devices icon -->
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.ico" />
+    <!-- Search engine crawling -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- Canonical URL -->
+    <!-- Replace yourdomain.com with your final domain before production deployment -->
+    <link rel="canonical" href="https://yourdomain.com/" />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Kunal Mahato | Frontend Developer & Freelancer"
+    />
+    <meta
+      property="og:description"
+      content="Freelance frontend developer building modern web applications with JavaScript, React, Node.js, and more."
+    />
+    <meta property="og:url" content="https://yourdomain.com/" />
+    <meta property="og:image" content="https://yourdomain.com/og-image.png" />
+    <meta property="og:site_name" content="Kunal Mahato" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Kunal Mahato | Frontend Developer & Freelancer"
+    />
+    <meta
+      name="twitter:description"
+      content="Freelance frontend developer building modern web applications with JavaScript, React, Node.js, and more."
+    />
+    <meta
+      name="twitter:image"
+      content="https://yourdomain.com/og-image.png"
+    />
 
     <!-- PWA manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <!-- Page title -->
-    <title>Kunal Mahato | Portfolio</title>
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Kunal Mahato",
+        "url": "https://yourdomain.com/",
+        "jobTitle": "Frontend Developer",
+        "description": "Freelance frontend developer building modern web applications with JavaScript, React, Node.js, and other modern technologies.",
+        "knowsAbout": [
+          "JavaScript",
+          "React",
+          "Node.js",
+          "Web Development",
+          "Frontend Development"
+        ]
+      }
+    </script>
   </head>
+
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      You need to enable JavaScript to run this application.
+    </noscript>
+
     <div id="root"></div>
   </body>
 </html>

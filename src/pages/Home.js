@@ -1,9 +1,9 @@
-
 import { useEffect, useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import Lenis from "@studio-freight/lenis";
-import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
+
+import SEO from "../components/SEO";
 
 // Lazy load components for better performance
 const GlobalCursor = lazy(() => import("../components/GlobalCursor"));
@@ -68,31 +68,27 @@ function Home({ initialLoad = false }) {
 
   return (
     <>
-      <Helmet>
-        <title>Kunal Mahato - Portfolio</title>
-        <meta name="description" content="Welcome to my portfolio. I'm a creative developer specializing in building exceptional digital experiences." />
-        <meta name="keywords" content="portfolio, developer, react, javascript, frontend" />
-        <meta property="og:title" content="Kunal Mahato - Portfolio" />
-        <meta property="og:description" content="Welcome to my portfolio. I'm a creative developer specializing in building exceptional digital experiences." />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Helmet>
+      <SEO
+        title="Kunal Mahato | Frontend Developer & Freelancer"
+        description="Kunal Mahato is a freelance frontend developer building modern web applications with JavaScript, React, Node.js, and other modern technologies."
+        path="/"
+      />
 
       {/* Page transition animation */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        transition={{ 
-          duration: 0.8, 
-          ease: [0.76, 0, 0.24, 1] 
+        transition={{
+          duration: 0.8,
+          ease: [0.76, 0, 0.24, 1],
         }}
         className="min-h-screen bg-[#e3e3e3] text-[#1a1a1a] cursor-none selection:bg-[#1a1a1a] selection:text-[#e3e3e3]"
       >
         <Suspense fallback={<LoadingSpinner />}>
           <GlobalCursor />
           <Navbar />
-          
+
           <main>
             <Hero />
             <About />
@@ -100,7 +96,7 @@ function Home({ initialLoad = false }) {
             <Skills />
             <Contact />
           </main>
-          
+
           <Footer />
         </Suspense>
       </motion.div>
@@ -109,11 +105,11 @@ function Home({ initialLoad = false }) {
 }
 
 Home.propTypes = {
-  initialLoad: PropTypes.bool
+  initialLoad: PropTypes.bool,
 };
 
 Home.defaultProps = {
-  initialLoad: false
+  initialLoad: false,
 };
 
 export default Home;

@@ -4,104 +4,171 @@ import { Link } from "react-router-dom";
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
-  
+
   // Scroll animations
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
-  
-  // Transform scroll progress to opacity values
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-  // Memoized process items to prevent re-renders
-  const processItems = useMemo(() => [
-    { label: "Learning", value: "React & UI", color: "#3B82F6" },
-    { label: "Building", value: "Responsive Sites", color: "#3B82F6" },
-    { label: "Exploring", value: "3D & Motion", color: "#F97316" }
-  ], []);
+  // Transform scroll progress to opacity values
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.8, 1],
+    [0, 1, 1, 0]
+  );
+
+  // Process items
+  const processItems = useMemo(
+    () => [
+      {
+        label: "Learning",
+        value: "React & UI",
+        color: "#3B82F6",
+      },
+      {
+        label: "Building",
+        value: "Responsive Sites",
+        color: "#3B82F6",
+      },
+      {
+        label: "Exploring",
+        value: "3D & Motion",
+        color: "#F97316",
+      },
+    ],
+    []
+  );
 
   return (
-    <section 
+    <section
+      id="about"
       ref={sectionRef}
+      aria-labelledby="about-heading"
       className="relative w-full min-h-screen bg-[#e3e3e3] text-[#1a1a1a] px-6 py-24 md:py-40 overflow-hidden"
     >
       {/* Large background number */}
-      <div className="absolute right-0 top-10 text-[30vw] font-black text-[#1a1a1a]/5 select-none leading-none pointer-events-none">
+      <div
+        className="absolute right-0 top-10 text-[30vw] font-black text-[#1a1a1a]/5 select-none leading-none pointer-events-none"
+        aria-hidden="true"
+      >
         01
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
-        
         {/* Section header */}
-        <motion.div style={{ opacity }} className="mb-24">
-          <span className="text-[10px] font-mono opacity-40 uppercase tracking-[0.5em] mb-6 block">
+        <motion.div
+          style={{ opacity }}
+          className="mb-24"
+        >
+          <span
+            className="text-[10px] font-mono opacity-40 uppercase tracking-[0.5em] mb-6 block"
+            aria-hidden="true"
+          >
             Inside the Mind
           </span>
-          <h2 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] uppercase">
-            CREATIVE<br />
+
+          <h2
+            id="about-heading"
+            className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] uppercase"
+          >
+            CREATIVE
+            <br />
+
             <span className="opacity-40 italic font-light">
-              <span className="text-[#3B82F6] opacity-100">DEVELOPER</span>
+              <span className="text-[#3B82F6] opacity-100">
+                DEVELOPER
+              </span>
             </span>
           </h2>
         </motion.div>
 
         {/* Content grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-[#1a1a1a]/10 pt-16">
-          
           {/* Left side - Bio */}
-          <div className="md:col-span-7 space-y-8">
+          <article className="md:col-span-7 space-y-8">
             <p className="text-2xl md:text-3xl font-medium leading-tight tracking-tight">
-              I'm Kunal — a frontend developer focused on turning ideas into 
-              <span className="opacity-40"> clean, interactive interfaces.</span>
+              I'm Kunal — a frontend developer focused on turning
+              ideas into
+              <span className="opacity-40">
+                {" "}
+                clean, interactive interfaces.
+              </span>
             </p>
+
             <p className="text-lg opacity-60 max-w-xl leading-relaxed">
-              I balance logic and aesthetics to build websites that don't just work, but 
-              <span className="text-[#3B82F6] opacity-100"> feel right</span>. 
-              Currently, I'm deep-diving into React and exploring how 
-              <span className="text-[#F97316] opacity-100"> motion</span> can tell a better story.
+              I balance logic and aesthetics to build modern
+              websites that don't just work, but
+              <span className="text-[#3B82F6] opacity-100">
+                {" "}
+                feel right
+              </span>
+              . Currently, I'm deep-diving into React and
+              exploring how
+              <span className="text-[#F97316] opacity-100">
+                {" "}
+                motion
+              </span>{" "}
+              can tell a better story through digital
+              experiences.
             </p>
-            
+
             {/* About page link */}
             <div className="pt-8">
-              <Link 
-                to="/about" 
+              <Link
+                to="/about"
+                aria-label="Read Kunal Mahato's full story and learn more about him"
                 className="group inline-flex items-center gap-6 cursor-none"
               >
-                <div className="w-16 h-16 rounded-full border border-[#1a1a1a] flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-[#3B82F6] group-hover:to-[#F97316] group-hover:border-transparent transition-all duration-500">
-                  <span className="text-2xl group-hover:translate-x-1 group-hover:text-white transition-all">→</span>
+                <div
+                  className="w-16 h-16 rounded-full border border-[#1a1a1a] flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-[#3B82F6] group-hover:to-[#F97316] group-hover:border-transparent transition-all duration-500"
+                  aria-hidden="true"
+                >
+                  <span className="text-2xl group-hover:translate-x-1 group-hover:text-white transition-all">
+                    →
+                  </span>
                 </div>
+
                 <div>
                   <span className="text-xs font-mono uppercase tracking-[0.3em] block opacity-40 group-hover:opacity-100 transition-opacity">
                     Curious?
                   </span>
+
                   <span className="text-xl font-black uppercase tracking-tighter group-hover:text-[#3B82F6] transition-colors">
                     Read Full Story
                   </span>
                 </div>
               </Link>
             </div>
-          </div>
+          </article>
 
           {/* Right side - Process & Status */}
           <div className="md:col-span-5 space-y-12 md:pl-12 md:border-l border-[#1a1a1a]/5">
-            
             {/* Process list */}
             <div>
-              <h4 className="text-[10px] font-mono opacity-30 uppercase tracking-[0.4em] mb-6">
+              <h3 className="text-[10px] font-mono opacity-30 uppercase tracking-[0.4em] mb-6">
                 Process
-              </h4>
+              </h3>
+
               <ul className="space-y-4 text-sm font-bold uppercase tracking-tight">
-                {processItems.map((item, index) => (
-                  <li 
-                    key={index}
+                {processItems.map((item) => (
+                  <li
+                    key={item.label}
                     className="flex justify-between items-center border-b border-[#1a1a1a]/5 pb-2 group"
                   >
                     <span>{item.label}</span>
-                    <span 
+
+                    <span
                       className="opacity-30 group-hover:opacity-100 transition-colors"
-                      style={{ color: `var(--hover-color, ${item.color})` }}
-                      onMouseEnter={(e) => e.currentTarget.style.setProperty('--hover-color', item.color)}
+                      style={{
+                        color: `var(--hover-color, ${item.color})`,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.setProperty(
+                          "--hover-color",
+                          item.color
+                        );
+                      }}
                     >
                       {item.value}
                     </span>
@@ -112,14 +179,22 @@ export default function AboutSection() {
 
             {/* Status card */}
             <div className="p-6 bg-[#1a1a1a] text-[#e3e3e3] rounded-2xl relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#3B82F6]/10 to-[#F97316]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <span className="text-[9px] font-mono opacity-40 uppercase block mb-3 underline relative z-10">
+              <div
+                className="absolute inset-0 bg-gradient-to-r from-[#3B82F6]/10 to-[#F97316]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                aria-hidden="true"
+              />
+
+              <h3 className="text-[9px] font-mono opacity-40 uppercase block mb-3 underline relative z-10">
                 Latest Status
-              </span>
+              </h3>
+
               <p className="text-sm font-medium leading-relaxed relative z-10">
-                Open for freelance projects and collaborations that 
-                <span className="text-[#3B82F6]"> push creative boundaries</span>.
+                Open for freelance projects and collaborations that
+                <span className="text-[#3B82F6]">
+                  {" "}
+                  push creative boundaries
+                </span>
+                .
               </p>
             </div>
           </div>
