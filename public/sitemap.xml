@@ -3,14 +3,14 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 >
   <url>
-    <loc>https://yourdomain.com/</loc>
+    <loc>https://kunal-mahato-portfolio.vercel.app/</loc>
   </url>
 
   <url>
-    <loc>https://yourdomain.com/about</loc>
+    <loc>https://kunal-mahato-portfolio.vercel.app/about</loc>
   </url>
 
   <url>
-    <loc>https://yourdomain.com/portfolio</loc>
+    <loc>https://kunal-mahato-portfolio.vercel.app/portfolio</loc>
   </url>
 </urlset>

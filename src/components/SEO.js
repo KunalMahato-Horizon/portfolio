@@ -6,7 +6,7 @@ export default function SEO({
   path = "",
   image = "/og-image.png",
 }) {
-  const siteUrl = "https://yourdomain.com";
+  const siteUrl = "https://kunal-mahato-portfolio.vercel.app";
   const url = `${siteUrl}${path}`;
 
   return (
